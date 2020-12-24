@@ -1,0 +1,15 @@
+{
+  "name": "javascript-stages",
+  "version": "1.0.0",
+  "description": "Step by step learning of JavaScript",
+  "main": "index.js",
+  "repository": "https://github.com/chioio/javascript-stages.git",
+  "author": "Tenn Chio",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "eslint": "^7.16.0"
+  }
+}
