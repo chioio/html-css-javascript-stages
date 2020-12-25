@@ -7,6 +7,14 @@
   "author": "Tenn Chio",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/async-dev",
+    "packages/basic",
+    "packages/es-next"
+  ],
+  "scripts": {
+    "dev:async": "yarn workspace async-dev dev"
+  },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
