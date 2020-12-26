@@ -66,3 +66,62 @@ Main thread: Task A										Task B
 ```
 
 由于操作发生在其他地方，因此在处理异步操作的时候，主线程不会被阻塞。
+
+
+
+## Async JavaScript
+
+代码必须等到`response`返回才能继续往下执行。
+
+JavaScript代码中，常见异步编程风格：callbacks（老式），promise（新式）
+
+### Async `callbacks`
+
+异步callbacks其实就是函数，只不过是作为参数传递给那些在后台执行的其他函数。当那些后台运行的代码结束，就调用callbacks函数，并做出响应。
+
+如`addEventListener()`的第二个参数就是异步callback；第一个参数是侦听的事件类型，第二个就是事件发生时调用的回调函数。
+
+### `Promises`
+
+Promises是新派的异步代码，现代的web APIs经常用到。
+
+`fetch()` API就是Promise的现代更高效的`XMLHttpRequest`
+
+```js
+fetch('products.json').then(function(response) {
+  return response.json();
+}).then(function(json) {
+  products = json;
+  initialize();
+}).catch(function(err) {
+  console.log('Fetch problem: ' + err.message);
+});
+```
+
+ 这里的`fetch()`只需要一个参数 — 资源的网络URL，返回一个`promise`。promise是表示异步操作**完成**或**失败**的对象。
+
+如果其中任何一个`then()`块失败，则在末尾运行`catch()`块 — 与同步`try...catch`类似，`catch()`提供了一个错误的对象，可用来报告发生的错误类型。但`try...catch`不能与promise一起工作。
+
+#### The Event Queue
+
+像promise这样的异步操作被放入事件队列中，事件队列在**主线程**完成处理后运行，这样它们就不会阻止后续JavaScript代码的运行。排队操作将尽快完成，然后将结果返回到JavaScript环境。
+
+#### Promises versus Callbacks
+
+两者本质上是一个返回的对象。
+
+`Promise`优点：
+
+* 可以使用多个`then()`操作将多个异步操作链接在一起，并将其中一个操作的结果作为输入传给下一个操作；而回调则会产生大量的嵌套。
+* `Promise`总是严格按照它们放置的事件队列中的**顺序**调用。
+* 错误处理都会由末尾的一个`catch()`块处理，而不是在每一层独立处理。
+
+### Async Code本质
+
+#### Example
+
+**async-sync.html**
+
+### Conclusion
+
+在最基本的形式中，JavaScript是一种同步的、阻塞的、单线程的语言。但通过web浏览器所定义的函数和API，允许我们当某些事件发生时不按照同步方式，而是按异步调用函数。
