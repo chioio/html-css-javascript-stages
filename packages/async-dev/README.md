@@ -125,3 +125,173 @@ fetch('products.json').then(function(response) {
 ### Conclusion
 
 在最基本的形式中，JavaScript是一种同步的、阻塞的、单线程的语言。但通过web浏览器所定义的函数和API，允许我们当某些事件发生时不按照同步方式，而是按异步调用函数。
+
+
+
+## 合作异步JavaScript：Timeouts & Intervals
+
+**`setTimeout()`**
+
+​	在指定的时间后执行一段代码
+
+**`setInterval()`**
+
+​	以固定的时间间隔，重复运行一段代码
+
+**`requestAnimationFrame()`**
+
+​	`setInterval()`的morden版本；在浏览器下一次重新绘制显示之前执行指定的代码块，从而允许动画在适当的帧率下运行，而不管它在什么环境中运行。
+
+* 这些函数设置的异步代码实际上在主线程上运行（在其指定的计时器过去之后）。
+
+  在`setTimeout()`调用**执行之前**或`setInterval()`迭代之间可以（并且经常会）运行其他代码。
+
+* 任何异步代码仅在主线程可用后才执行（当调用栈为空时）。
+
+### `setTimeout()`
+
+**Point：**如果指定值为0（或完全省略该值），函数将尽快执行。
+
+> **Note：**因为`setTimeout()`其本身就是异步操作，指定的时间（或延时）不能保证在指定的确切时间后执行，而是最短的延时执行时间。**主线程上的堆栈为空前，传递给这些函数的回调将无法运行**。所以指定值为0时，回调**不会立即执行**。
+>
+> **Example：**执行类似`setTimeout(fn, 0)`之类的代码，之后立即运行从1到100亿的循环后，回调将在几秒后执行。
+
+#### 传递参数给`setTimeout()`
+
+```js
+function sayHi(who) {
+  alert(`Hello ${who}!`);
+}
+
+let makeGreeting = setTimeout(sayHi, 2000, 'Mr. Tenn Chio');
+
+```
+
+#### Clearing timeouts
+
+```js
+clearTimeout(makeGreeting);
+```
+
+### `setInterval()`
+
+#### Example
+
+​	**setinterval-clock.html**
+
+​	**set interval-stopwatch.html**
+
+```js
+function displayTime() {
+  let date = new Date();
+  let time = date.toLocaleTimeString();
+  document.getElementById('demo').textContent = time;
+}
+
+const createClock = setInterval(displayTime, 1000);
+```
+
+#### 清除Intervals
+
+```js
+const myInterval = setInterval(myFunction, 2000);
+
+clearInterval(myInterval);
+```
+
+#### 递归的timeouts
+
+我们可以递归调用`setTimeout()`来重复运行相同的代码，从而代替`setInterval()`
+
+```js
+let i = 1;
+
+setTimeout(function run() {
+  console.log(i);
+  i++;
+  setTimeout(run, 100);
+}, 100);
+
+// ==========================
+
+let i = 1;
+
+setInterval(function run() {
+  console.log(i);
+  i++;
+}, 100)
+```
+
+##### 递归`setTimeout()`和`setInterval()`有何不同？
+
+* 递归`setTimeout()`保证执行之间的**延迟相同**
+* 使用`setInterval()`时，选择的时间间隔包括执行我们所运行的代码所花费的时间。（假设代码需要40毫秒才能运行完成，然后间隔最终只有60毫秒）
+* 当递归使用`setTimeout()`时，每次迭代都可以在运行下一次迭代之前计算不同的延迟；即第二个参数的值可以指定再次运行代码之前等待不同的时间。
+
+#### 立即超时
+
+使用0用作`setTimeout()`的回调函数会立即执行，但是在主线程代码之后执行。
+
+```js
+// 先弹出弹窗"Hello"，待用户点击弹窗确认按钮后再弹出弹窗"world"
+
+setTimeout(function() {
+  alert('World');
+}, 0);
+
+alert('Hello');
+```
+
+### `requestAnimationFrame()`
+
+`requestAnimationFrame()`是一个专门的循环函数，旨在浏览器中搞笑运行动画。在浏览器重新加载显示内容之前执行指定的代码块，从而允许动画以适当的帧率运行，不管其运行的环境如何。
+
+* `requestAnimationFrame()`是递归调用的
+
+#### `requestAnimationFrame()`与`setInterval()`和`setTimeout()`有什么不同？
+
+```js
+function draw() {
+  // Drawing code goes here
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+// ===========================
+
+function draw() {
+  // Drawing code goes here
+}
+
+setInterval(draw, 17);		// 1000毫秒/60Hz 约为 17毫秒
+```
+
+#### 包括时间戳
+
+```js
+let startTime = null;
+
+function draw(timestamp) {
+  if(!startTime) {
+    startTime = timestamp;
+  }
+  
+  currentTime = timestamp - startTime;
+  
+  // Do something based on current time
+  
+  requestAnimationFrame(draw);
+}
+
+draw();
+```
+
+#### 撤销`requestAnimationFrame()`
+
+`cancelAnimationFrame()`撤销，与`setTimeout()`\`setInterval()`的清除有所不同。
+
+```js
+cancelAnimationFrame(rAF);
+```
+
