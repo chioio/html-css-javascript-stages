@@ -47,7 +47,7 @@ Worker thread: Expensive task B
 
 ### Asynchronous Code
 
-Web Workers存在局限性，不能访问DOM — 不能让一个worker直接更新UI。其次，虽然worker里面运行的代码不会产生阻塞，但是基本上还是**同步**的，即当一个函数依赖于几个在它**之前运行的过程的结果**时，就会成为问题。
+Web Workers存在局限性，**不能访问DOM** — 不能让一个worker直接更新UI。其次，虽然worker里面运行的代码不会产生阻塞，但是基本上还是**同步**的，即当一个函数依赖于几个在它**之前运行的过程的结果**时，就会成为问题。
 
 ```text
 * use sync
@@ -293,5 +293,134 @@ draw();
 
 ```js
 cancelAnimationFrame(rAF);
+```
+
+
+
+## Graceful Async Programming with Promises
+
+### What is promises?
+
+本质上，Promises是一个对象，代表操作的中间状态（承诺），它保证未来可能返回某种结果。
+
+### `Promise`
+
+`promise`与事件监听器类似，但也存在差异：
+
+* 一个promise只能**成功**或**失败**一次。它不能成功或失败两次，并且一旦操作完成，他就无法从成功切换到失败，而事件监听器则相反。
+* 如果promise成功或失败并且你稍后添加**成功/失败回调**，则将调用正确的回调，即使时间发生在较早的时间。
+
+#### 响应失败
+
+通过	`.catch()`方法来添加错误处理
+
+```js
+let errorCase = promise.catch(e => {
+  console.log('There has been a problem with your fetch orperation: ' + e.message);
+})
+```
+
+* 履行的promise所返回的值都将成为传递给下一个`.then()`块的executor函数的参数。
+
+### Promise回顾
+
+* 创建promise时，它既不是**成功**也不是**失败**状态。这个状态叫做**pending**（待定）。
+
+* 当promise返回时，称为**resolved**（已解决）
+
+  * 一个**成功resolved**的promise称为**fullfilled**（实现）。
+
+    它返回一个值，可以通过将`.then()`块链接到promise链的末尾来访问该值。
+
+    `.then()`块中的执行程序函数将包含promise的返回值。
+
+  * 一个**不成功resolved**的promise被称为**rejected（拒绝）**了。
+
+    它返回一个原因（**reason**），一条错误消息，说明为什么拒绝promise。
+
+    可以通过`.catch()`块链接到promise链的末尾来访问此原因。
+
+### 运行代码以响应多个Promises的实现
+
+使用`Promise.all()`**静态方法**，将一个promises数组作为输入参数，并返回一个新的Promise对象，**只有**当数组中的所有promise都满足时才会执行`.then()`块。
+
+```js
+Promise.all([a, b, c]).then(values => {
+  ...
+});
+```
+
+### 在promise fullfill/reject后运行一些最终代码
+
+必须在`.then()`和`.catch()`回调中包含相同的代码。
+
+```js
+myPromise
+	.then(response => {
+  	doSomething(response)
+  	runFinalCode();
+	})
+	.catch(e => {
+  	returnError(e);
+  	runFinalCode();
+	})
+```
+
+使用`.finally()`块：
+
+```js
+myPromise
+	.then(response => {
+	  doSomething(response);
+	})
+	.catch(e => {
+  returnError(e);
+	})
+	.finally(() => {
+  	runFinalCode()
+	})
+```
+
+### 构建自定义`promise`
+
+#### 使用`Promise()`构造函数
+
+```js
+let timeoutPromise = new Promise((resolve, reject) => {
+  setTimeout(function() {
+    resolve('Success!')
+  }, 2000)
+})
+```
+
+`resolve()`和`reject()`是用来**实现**和**拒绝**新创建的promise的函数。
+
+```js
+timeoutPromise.then(message => {
+  alert(message)
+})
+
+// ---- 简化 ----
+timeoutPromise.then(alert)
+```
+
+#### 拒绝一个自定义的`promise`
+
+`reject()`需要一个值，该值为拒绝的原因，即将传递给`.catch()`的错误块。
+
+```js
+function timeoutPromise(message, interval) {
+  return new Promise((resolve, reject) => {
+    if (message === '' || typeof message !== 'string') {
+      reject('Message is empty or not a string')
+    } else if (interval < 0 || typeof interval !== 'number') {
+      reject('Interval is negative ot not a number')
+    } else {
+      setTimeout(() => {
+        resolve(message);
+      }, interval)
+    }
+  })
+}
 ```
 
