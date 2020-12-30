@@ -424,3 +424,112 @@ function timeoutPromise(message, interval) {
 }
 ```
 
+
+
+## `async` & `await` 
+
+ES 2017中提供的基于promises的**语法糖**，使得异步代码更易于编写和阅读。
+
+### Basic
+
+#### `async` 关键字
+
+​	`async function`，将保证函数**返回值为promise**
+
+```js
+async function hello() { return 'Hello' }
+// ------------------
+let hello = async () => { return 'Hello' }
+
+hello().then(value => console.log(value))
+// ------------------
+hello().then(console.log)
+
+```
+
+#### `await`关键字
+
+**`await`只在异步函数里面才起作用**。它可以放在任何异步的，基于promise的函数之前。它会暂停代码在该行上，直到promise完成，然后返回结果值。在暂停的同时，其他正在等待的代码就有机会执行了。
+
+```js
+async function hello() {
+  return greeting = await Promise.resolve('Hello')
+}
+
+hello().then(alert)
+```
+
+### `async`和`await`的缺陷
+
+`async`/`await`让代码开起来是同步的，在某种程度上，也使得它的行为更加地同步。
+
+`await`关键字会**阻塞**其后的代码，直到promise完成，就像执行同步操作一样。
+
+每个`await`都会等待前一个完成，而我们实际想要的是所有的promises同时开始处理（就像没有使用`async`/`await`时那样）。
+
+解决这个问题 — 通过将**`Promise`对象存储在变量中**来同时开始它们，然后等待它们全部执行完毕。
+
+#### Example
+
+​	**slow-async-await.html**
+
+```js
+async function timeTest() {
+  await timeoutPromise(3000)
+  await timeoutPromise(3000)
+  await timeoutPromise(3000)
+}
+```
+
+这里是直接等待所有三个`timeoutPromise()`调用，使每个调用3秒钟。后续的每一个被迫等到最后一个完成。所以该例子执行所需时间为 9s+。
+
+​	**fast-async-await.html**
+
+```js
+async function timeTest() {
+  const timeoutPromise1 = timeoutPromise(3000)
+  const timeoutPromise2 = timeoutPromise(3000)
+  const timeoutPromise3 = timeoutPromise(3000)
+  
+  await timeoutPromise1
+  await timeoutPromise2
+  await timeoutPromise3
+}
+```
+
+这里是将三个Promise对象存储在变量中，这样可以同时启动它们关联的进程。
+
+接下来等待它们的结果 — 因为promise都基本上同时处理，promise将同时完成，所以该例子执行所需时间为仅为 3s+。
+
+* 另外，必须将等待执行的promise封装在异步函数中。
+
+### async/await的类方法
+
+可以在**类/对象方法**前面添加`async`，以使它们返回promises，并`await`它们内部的promises。
+
+```js
+class Person {
+  constructor(first, last, age, gender, interests) {
+    this.name = {
+      first,
+      last
+    }
+    this.age = age
+    this.gender = gender
+    this.interests = interests
+  }
+  
+  async greeting() {
+    return await Promise.resolve(`Hi! I'm ${this.name.first}`)
+  }
+  
+  farewell() {
+    console.log(`${this.name.first} has left the building. Bye for now!`)
+  }
+}
+
+let han = new Person('Han', 'Solo', 25, 'male', ['Smuggling'])
+
+han.greeting().then(console.log)
+```
+
