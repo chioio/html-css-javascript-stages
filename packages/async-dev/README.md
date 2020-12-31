@@ -533,3 +533,43 @@ let han = new Person('Han', 'Solo', 25, 'male', ['Smuggling'])
 han.greeting().then(console.log)
 ```
 
+
+
+## Supplements
+
+### Async Callback
+
+通过`XMLHttpRequest` API加载资源
+
+```js
+function loadAsset(url, type, callback) {
+  let xhr = new XMLHttpRequest()
+  xhr.open('GET', url)
+  xhr.responseType = type
+  
+  xhr.onload = function() {
+    callback(xhr.response)
+  }
+  
+  xhr.send()
+}
+
+function displayTimage(blob) {
+  let objectURL = URL.createObjectURL(blob)
+  
+  let image = document.createElement('img')
+  image.src = objectURL
+  document.body.appendChild(image)
+}
+
+loadAsset('logo.svg', 'blob', displayImage)
+```
+
+#### 缺陷
+
+* “回调地狱”
+* 每层嵌套都需要故障回调，而是用promise，只需要使用一个`.catch()`代码块来处理整个链的错误。
+* 异步回调不够优雅。
+* Promise回调总是按照它们放在事件队列中严格顺序调用；而异步回调不是。
+* 当传入到一个第三方库时，**异步回调**对函数如何执行 失去 完全控制。
+
