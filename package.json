@@ -9,11 +9,13 @@
   "private": true,
   "workspaces": [
     "packages/async-dev",
+    "packages/client-side-api",
     "packages/basic",
     "packages/es-next"
   ],
   "scripts": {
-    "dev:async": "yarn workspace async-dev dev"
+    "dev:async": "yarn workspace async-dev dev",
+    "dev:c-api": "yarn workspace client-side-api dev"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
