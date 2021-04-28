@@ -60,3 +60,29 @@ HTML tags are composed of element, attributes, and values.
 
 ### Block-level Element & Inline-level Element
 
+## Create Article
+
+### `<header>`, `<footer>`, `<nav>`
+Cannot nest a footer element or anther header in the header element, and cannot nest a header element in a footer or address element.
+Cannot nest a nav in the address element.
+#### `<small>`
+Semanticization of copyright or legal terms.
+
+### `<article>`
+For one or more article in document, page, website.
+
+### `<section>`
+For divide page universal parts.  
+Define the similar theme in a group content.
+
+### `<aside>`
+For a part of the content that not so relevant to the main content.
+
+### `<div>`
+For common containers, it is not semantic.
+
+#### `<span>`
+Not semantic inline element.
+
+### class, id, title
+
