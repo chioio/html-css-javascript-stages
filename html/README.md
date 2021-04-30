@@ -203,3 +203,18 @@ Ruby annotation.
 <ruby>
 <rp>(</rp><rt>apple</rt><rp>)</rp>
 </ruby>
+
+## Image Processing
+
+### SVG(Scalable Vector Graphics)
+
+### Color
+
+R(Red), G(Green), B(Blue), RGB 模式又称三原色模式;
+C(Cyan 青), M(Magenta 品红), Y(Yellow 黄), B(Black), CMYK 模式又称印刷 4 分色模式.
+
+### `<img>`
+
+`alt` attribute value can replace the image on web page if the image load failure.  
+`width` and `height` attributes specify the image size with pixel.
+
