@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pseudo-classes(伪类)</title>
+    <style>
+      a {
+        font-size: 2.5rem;
+      }
+      /* When links unvisited */
+      a:link {
+        color: red;
+      }
+      /* When links visited */
+      a:visited {
+        color: orange;
+      }
+      /* When links on focused */
+      a:focus {
+        color: purple;
+      }
+      /* When mouseover to links */
+      a:hover {
+        color: green;
+      }
+      /* When mouse clicking on links*/
+      a:active {
+        color: steelblue;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/test.html">Link to <code>/test.html</code> - unvisited.</a>
+    <br />
+    <a href="/">Link to <code>/</code>(default path) - visited.</a>
+    <br />
+    <p>
+      <b>Tip: </b>Using TAB to focus on links.<br />
+      (The text color will change to purple when links on focused)
+    </p>
+  </body>
+</html>
