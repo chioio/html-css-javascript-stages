@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Counter</title>
+  </head>
+  <body>
+    <div id="counter">
+      <p>Counter: {{ count }}</p>
+    </div>
+
+    <script type="module">
+      import {
+        createApp,
+        ref,
+        onMounted,
+      } from 'https://unpkg.com/vue@next/dist/vue.esm-browser.js';
+
+      const App = createApp({
+        setup(props) {
+          const count = ref(0);
+
+          onMounted(() => setInterval(() => count.value++, 1000));
+
+          return {
+            count,
+          };
+        },
+      });
+
+      App.mount('#counter');
+    </script>
+    <script></script>
+  </body>
+</html>
