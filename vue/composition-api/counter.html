@@ -3,18 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <title>Counter</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   </head>
   <body>
-    <div id="counter">
-      <p>Counter: {{ count }}</p>
+    <div id="app">
+      <span>{{ count }}</span>
     </div>
 
-    <script type="module">
-      import {
-        createApp,
-        ref,
-        onMounted,
-      } from 'https://unpkg.com/vue@next/dist/vue.esm-browser.js';
+    <script type="text/babel">
+      const { createApp, ref, onMounted } = Vue
 
       const App = createApp({
         setup(props) {
@@ -28,8 +26,7 @@
         },
       });
 
-      App.mount('#counter');
+      App.mount('#app');
     </script>
-    <script></script>
   </body>
 </html>

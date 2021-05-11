@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>React Counter</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+      // 引入React Hooks
+      const { useState, useEffect } = React;
+
+      const CounterApp = () => {
+        const [count, setCount] = useState(0);
+
+        useEffect(() => {
+          const counter = setInterval(() => setCount(count + 1), 1000);
+          return () => clearInterval(counter);
+        });
+
+        // JSX
+        return <span>{count}</span>;
+      };
+      ReactDOM.render(<CounterApp />, document.getElementById('app'));
+    </script>
+  </body>
+</html>
