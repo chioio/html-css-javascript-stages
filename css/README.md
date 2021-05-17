@@ -48,3 +48,47 @@
 > - Other
 >   - cursor
 >   - quotes(指定引号样式)
+
+
+
+## CSS Construct Block
+
+### Property value
+
+* inherit
+
+  显示指出该属性的值对应元素的父元素对该属性设定的值相同。
+
+* pre-define value
+
+
+
+### CSS Color
+
+HEX, RGB, HSL(CSS 3), RGBA(CSS 3), HSLA(CSS 3)
+
+HSL( Hue[色相] Saturation[饱和度] Lightness[亮度])
+
+Hue: 0 ~ 360
+
+Saturation\Lightness: 0 ~ 100%
+
+
+
+## Define Selectors
+
+The selector determines which elements the formatting is applied to, while the **declaration** defines the formatting to be applied.
+
+
+
+## Text Styles
+
+Not inherit the father element font setting:
+
+* select
+* textarea
+* input
+
+> Can use the `font-family: inherit` to inherit the father element font setting.
+
+The font list is called font stack.
