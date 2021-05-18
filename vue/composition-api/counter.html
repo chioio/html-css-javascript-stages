@@ -12,13 +12,16 @@
     </div>
 
     <script type="text/babel">
-      const { createApp, ref, onMounted } = Vue
+      const { createApp, ref, onMounted, onUnmounted } = Vue
 
       const App = createApp({
         setup(props) {
           const count = ref(0);
 
-          onMounted(() => setInterval(() => count.value++, 1000));
+          const timer = setInterval(() => count.value++, 1000)
+
+          onMounted(() => timer)
+          onUnmounted(() => clearInterval(timer))
 
           return {
             count,

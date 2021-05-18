@@ -10,7 +10,9 @@
       <span>{{ count }}</span>
     </div>
     <script>
-      const app = Vue.createApp({
+      const { createApp } = Vue
+
+      const app = createApp({
         data() {
           return { count: 0 };
         },
