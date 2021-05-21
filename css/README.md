@@ -92,3 +92,30 @@ Not inherit the father element font setting:
 > Can use the `font-family: inherit` to inherit the father element font setting.
 
 The font list is called font stack.
+
+#### em[相对单位]
+
+#### `font` Property
+
+`font: [font-style] [font-weight] [font-variant] [line-height] [font-family]`
+
+#### Background
+
+`background`
+
+`background-color`
+
+`background-image`
+
+`background-repeat`: [direction] (repeat-x, repeat-y, no-repeat)
+
+`background-attachment`: [fixed, scroll, local]
+
+`background-position` [x, y] [left center right, top center bottom]
+
+`background-clip`
+
+
+
+
+
