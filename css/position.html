@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>position</title>
+    <style>
+      .container {
+        display: flex;
+        position: relative;
+        background-color: #303030;
+        height: 300px;
+      }
+      .box1,
+      .box2,
+      .box3,
+      .box4 {
+        border: 1px solid #666;
+        height: 125px;
+        position: absolute;
+        width: 200px;
+      }
+      .box1 {
+        background: pink;
+        left: 110px;
+        top: 50px;
+        z-index: 120;
+      }
+      .box2 {
+        background: yellow;
+        left: 0;
+        top: 130px;
+        z-index: 530;
+      }
+      .box3 {
+        background: #ccc;
+        position: static;
+        z-index: 1000;
+      }
+      .box4 {
+        background: orange;
+        left: 285px;
+        top: 65px;
+        z-index: 3;
+      }
+
+      input[type='image'] {
+        vertical-align: bottom;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box1">
+        <p>Box 1</p>
+      </div>
+      <div class="box2">
+        <p>Box 2</p>
+      </div>
+      <div class="box3">
+        <p>Box 3</p>
+      </div>
+      <div class="box4">
+        <p>Box 4</p>
+      </div>
+    </div>
+
+    <form action="" method="GET" role="search">
+      <label for="search">Search</label>
+      <input type="search" id="search" name="search" />
+      <input
+        type="image"
+        src="img/button-go.jpg"
+        width="20"
+        height="20"
+        alt="Submit search"
+      />
+    </form>
+  </body>
+</html>

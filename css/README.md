@@ -93,13 +93,13 @@ Not inherit the father element font setting:
 
 The font list is called font stack.
 
-#### em[相对单位]
+### em[相对单位]
 
-#### `font` Property
+### `font` Property
 
 `font: [font-style] [font-weight] [font-variant] [line-height] [font-family]`
 
-#### Background
+### Background
 
 `background`
 
@@ -115,7 +115,37 @@ The font list is called font stack.
 
 `background-clip`
 
+### Margin/Padding `em` value
 
+> 当`em`值用于内边距和外边距时，它的值是相对元素的字体大小的，而不是相对于父元素字体大小的。
+
+### Float
+
+`.clearfix`
+
+```css
+.clearfix::before,
+.clearfix::after {
+  content: " ";
+  display: table;
+}
+.clearfix::after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+```
+
+### Vertical Align
+
+`vertical-align`设置表格中的内容对其方式；`vertical-align`属性仅适用于行内元素。
+
+### Responsive Web
+
+#### Flex
+
+要指定的宽度（像素）/ 容器宽度（像素） = value
 
 
 
