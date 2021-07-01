@@ -1,0 +1,102 @@
+/* --------  Global  -------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px;
+}
+h1 {
+  line-height: 5rem;
+}
+
+/* --------  Common Container  -------- */
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #303030;
+  width: 100%;
+  height: 300px;
+  border-radius: 15px;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+.container .header {
+  position: absolute;
+  top: 0;
+  color: #fff;
+}
+.container .controls {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 25px;
+  padding: 15px;
+  background-color: #efefef30;
+}
+.container .controls label {
+  color: #fff;
+  user-select: none;
+  margin: 0 5px;
+}
+
+/* --------  Scale Carousel Map  -------- */
+:root {
+  --carousel-map-width: 600px;
+}
+#scale-carousel-map {
+  position: relative;
+  display: flex;
+  width: 500px;
+  height: 100px;
+}
+#scale-carousel-map .slide {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 100%;
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 1.5rem;
+  transition: all ease 0.8s;
+  z-index: 0;
+}
+#scale-carousel-map .slide.current {
+  transform: translateX(150px) scale(1.2);
+  z-index: 3;
+}
+#scale-carousel-map .slide.left {
+  transform: translateX(0);
+  right: -50px;
+  z-index: 1;
+}
+#scale-carousel-map .slide.right {
+  transform: translateX(350px);
+  left: -50px;
+  z-index: 2;
+}
+#scale-carousel-map .slide.left::after,
+#scale-carousel-map .slide.right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  background-color: #30303030;
+  z-index: 1;
+}
