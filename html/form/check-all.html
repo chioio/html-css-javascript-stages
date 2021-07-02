@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>check all</title>
+  </head>
+  <body>
+    <form action="">
+      <input id="one" type="checkbox" /> <label for="one">ONE</label> <br />
+      <input id="two" type="checkbox" /> <label for="two">TWO</label> <br />
+      <input id="three" type="checkbox" /> <label for="three">THREE</label>
+      <br />
+      <input id="all" type="checkbox" /> <label for="all">SELECT ALL</label>
+      <br />
+      <input type="text" name="info" id="info" placeholder="information" />
+    </form>
+    <script>
+      const checkboxEls = document.querySelectorAll("input[type='checkbox']");
+      const checkAllEl = checkboxEls[checkboxEls.length - 1];
+
+      checkAllEl.addEventListener('click', (e) => {
+        if (checkAllEl.checked) {
+          for (const key in checkboxEls) {
+            if (Object.hasOwnProperty.call(checkboxEls, key)) {
+              const element = checkboxEls[key];
+              element.checked = true;
+              console.log(element.checked);
+            }
+          }
+        } else {
+          for (const key in checkboxEls) {
+            if (Object.hasOwnProperty.call(checkboxEls, key)) {
+              const element = checkboxEls[key];
+              element.checked = false;
+              console.log(element.checked);
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
